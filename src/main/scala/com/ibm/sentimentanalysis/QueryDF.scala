@@ -1,8 +1,6 @@
-import java.sql.{Connection, DriverManager}
+package com.ibm.sentimentanalysis
 
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.{SQLContext, SparkSession}
-import org.apache.spark.sql.hive.HiveContext
 
 object QueryDF {
 
