@@ -1,0 +1,1 @@
+/home/cloudera/IdeaProjects/SentimentAnalysisModule/logs

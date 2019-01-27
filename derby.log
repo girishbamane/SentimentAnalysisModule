@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Jan 24 11:25:58 IST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0168-7e6d-e5bd-00000b37de78 
+on database directory C:\Users\IBM_ADMIN\Desktop\Softwares\Orien\Material\Day3\SentimentAnalysisModule\metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@44e93c1f 
+Loaded from file:/C:/Users/IBM_ADMIN/.ivy2/cache/org.apache.derby/derby/jars/derby-10.12.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_161-b12
+user.dir=C:\Users\IBM_ADMIN\Desktop\Softwares\Orien\Material\Day3\SentimentAnalysisModule
+os.name=Windows 7
+os.arch=amd64
+os.version=6.1
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
