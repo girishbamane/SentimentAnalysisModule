@@ -40,37 +40,37 @@ object SentimentAnalysis {
     rawStream.foreachRDD { kafkaRdd =>
       println("kafka rdd : "+ kafkaRdd.count())
       val sparks = SparkSession.builder()
-            .appName("Java Spark SQL basic example")
-            .config("spark.master", "local[2]")
-            .config("spark.sql.warehouse.dir", warehouseLocation)
-            .config("hive.metastore.uris", "thrift://127.0.0.1:9083/metastore")
-            .config("spark.sql.catalogImplementation","hive")
-            .enableHiveSupport()
-            .getOrCreate()
+        .appName("Java Spark SQL basic example")
+        .config("spark.master", "local[2]")
+        .config("spark.sql.warehouse.dir", warehouseLocation)
+        .config("hive.metastore.uris", "thrift://127.0.0.1:9083/metastore")
+        .config("spark.sql.catalogImplementation","hive")
+        .enableHiveSupport()
+        .getOrCreate()
 
-            import sparks.implicits._
-            val myrdd = kafkaRdd.map (ele =>  ele._1.toString +","+ ele._2.substring(0, ele._2.indexOf("\t")).toString +","+
-              SentimentAnalysisUtils.detectSentiment(ele._2.substring(ele._2.indexOf("\t"))).toString +","+ ele._2.substring(ele._2.indexOf("\t")).toString)//.saveAsTextFile("hdfs://localhost:8020/spark/input/").
-            println("myrdd size "+myrdd.count())
-            val df = myrdd.toDF()
-            println("df : "+df.count())
-      df.write.mode(SaveMode.Append).text("hdfs://localhost:8020/user/hive/warehouse/twitter/")
-      counter = counter.toInt+df.count().toInt
+      import sparks.implicits._
+      val myrdd = kafkaRdd.map (ele =>  ele._1.toString +","+ ele._2.substring(0, ele._2.indexOf("\t")).toString +","+
+        SentimentAnalysisUtils.detectSentiment(ele._2.substring(ele._2.indexOf("\t"))).toString +","+ ele._2.substring(ele._2.indexOf("\t")).toString)//.saveAsTextFile("hdfs://localhost:8020/spark/input/").
+      println("myrdd size "+myrdd.count())
+      val df = myrdd.toDF()
+      println("df : "+df.count())
+      if(df.count()>0)df.write.mode(SaveMode.Append).text("hdfs://localhost:8020/user/hive/warehouse/twitter/")
+      counter = counter.toInt+1
       println("counter "+counter)
-            //println("myrdd "+myrdd.count())
+      //println("myrdd "+myrdd.count())
 
 
-            //myrdd.saveAsTextFile("hdfs://localhost:8020/spark/input/")
-              // QueryDF.main(Array(createdAt,hashTag,setiment,tweet))//insertToHive(createdAt,hashTag,setiment,tweet)
-             // sqlco.sql("CREATE TABLE IF NOT EXISTS twitter(createdAt String, hashTag STRING, sentiment String, tweet String) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'")
-              //sqlco.sql("INSERT INTO table twitter values("+ele._1+","+ele._2.substring(0, ele._2.indexOf("\t")).toString+" ,"+SentimentAnalysisUtils.detectSentiment(ele._2.substring(ele._2.indexOf("\t")).toString).toString+", "+ele._2.substring(ele._2.indexOf("\t"))+")")
-              //sqlco.sql("show tables").show()
-              //sqlco.sql("select hashTag,sentiment from default.twitter").show()*/
-        /*TweetRecord(ele._1,
-          ele._2.substring(0, ele._2.indexOf("\t")).toString,
-          SentimentAnalysisUtils.detectSentiment(ele._2.substring(ele._2.indexOf("\t")).toString).toString,
-          ele._2.substring(ele._2.indexOf("\t")))*/
-//      //}
+      //myrdd.saveAsTextFile("hdfs://localhost:8020/spark/input/")
+      // QueryDF.main(Array(createdAt,hashTag,setiment,tweet))//insertToHive(createdAt,hashTag,setiment,tweet)
+      // sqlco.sql("CREATE TABLE IF NOT EXISTS twitter(createdAt String, hashTag STRING, sentiment String, tweet String) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'")
+      //sqlco.sql("INSERT INTO table twitter values("+ele._1+","+ele._2.substring(0, ele._2.indexOf("\t")).toString+" ,"+SentimentAnalysisUtils.detectSentiment(ele._2.substring(ele._2.indexOf("\t")).toString).toString+", "+ele._2.substring(ele._2.indexOf("\t"))+")")
+      //sqlco.sql("show tables").show()
+      //sqlco.sql("select hashTag,sentiment from default.twitter").show()*/
+      /*TweetRecord(ele._1,
+        ele._2.substring(0, ele._2.indexOf("\t")).toString,
+        SentimentAnalysisUtils.detectSentiment(ele._2.substring(ele._2.indexOf("\t")).toString).toString,
+        ele._2.substring(ele._2.indexOf("\t")))*/
+      //      //}
 
       /*      println("WDC Count : "+wdc.count())
             if (wdc.count() > 0) {
@@ -79,7 +79,7 @@ object SentimentAnalysis {
             }*/
     }
 
-     ssc.start()
-     ssc.awaitTermination()
+    ssc.start()
+    ssc.awaitTermination()
   }
 }
