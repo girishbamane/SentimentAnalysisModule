@@ -1,5 +1,4 @@
-# SentimentAnalysisModule
-val sparkConf = new SparkConf().setAppName("DirectKafkaWordCount").setMaster("local[2]")
+    val sparkConf = new SparkConf().setAppName("DirectKafkaWordCount").setMaster("local[2]")
     val ssc = new StreamingContext(sparkConf, Seconds(2))
     val topics = "twitter_topicv6"
     val topicsSet = topics.split(",").toSet
@@ -16,4 +15,4 @@ val sparkConf = new SparkConf().setAppName("DirectKafkaWordCount").setMaster("lo
       LocationStrategies.PreferConsistent,
       ConsumerStrategies.Subscribe[String, String](topicsSet, kafkaParams))
 
-    recordsStream
+    recordsStream.foreachRDD
