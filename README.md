@@ -16,3 +16,17 @@
       ConsumerStrategies.Subscribe[String, String](topicsSet, kafkaParams))
 
     recordsStream.foreachRDD
+
+
+
+import org.apache.kafka.clients.consumer
+import org.apache.log4j.{Level, LogManager, Logger}
+import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.apache.kafka.common.serialization.StringDeserializer
+import org.apache.spark.streaming.kafka010._
+import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
+import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
+import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.kafka.clients.consumer.ConsumerConfig
+import org.apache.spark.sql.{SaveMode, SparkSession}
