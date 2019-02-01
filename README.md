@@ -30,3 +30,49 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.spark.sql.{SaveMode, SparkSession}
+
+
+
+start zookeeper - 
+
+bin\windows\zookeeper-server-start.bat config\zookeeper.properties
+
+start kafka server - 
+
+bin\windows\kafka-server-start.bat .\config\server.properties
+
+1. Create Topic 
+
+bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic twitter_topicv3
+
+	Created - twitter_topicv3
+
+2. List topics 
+
+bin\windows\kafka-topics.bat --list --zookeeper localhost:2181
+
+3. Start Producer 
+
+bin\windows\kafka-console-producer.bat 
+
+4. Start Consumer 
+
+bin\windows\kafka-console-consumer.bat 	--bootstrap-server localhost:9092 --topic twitter_topicv3 --from-beginning
+10604
+
+  
+
+
+bin\windows\kafka-run-class.bat kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic twitter_topicv3
+
+\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --alter --topic twitter_topicv3 --config retention.ms=1
+
+Delete topic in kafka 
+
+Stop Kafka server
+Delete the topic directory with rm -rf command
+Connect to Zookeeper instance: zookeeper-shell.sh host:port
+ls /brokers/topics
+Remove the topic folder from ZooKeeper using rmr /brokers/topics/yourtopic
+Restart Kafka server
+Confirm if it was deleted or not by using this command kafka-topics.sh --list --zookeeper host:port
